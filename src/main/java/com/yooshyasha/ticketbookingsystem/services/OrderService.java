@@ -6,6 +6,7 @@ import com.yooshyasha.ticketbookingsystem.dto.contoller.order.ResponseGetUserOrd
 import com.yooshyasha.ticketbookingsystem.entity.Order;
 import com.yooshyasha.ticketbookingsystem.entity.Ticket;
 import com.yooshyasha.ticketbookingsystem.entity.User;
+import com.yooshyasha.ticketbookingsystem.exception.UserAlreadyHasOrder;
 import com.yooshyasha.ticketbookingsystem.exception.UserNotFound;
 import com.yooshyasha.ticketbookingsystem.repo.OrderRepository;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,11 @@ public class OrderService {
 
         if (user == null) {
             throw new UserNotFound();
+        }
+
+        ResponseGetUserOrder alreadyCreatedOrder = getUserOrder(userId);
+        if (alreadyCreatedOrder.getOrder() != null) {
+            throw new UserAlreadyHasOrder();
         }
 
         Collection<Ticket> tickets = ticketService.createTickets(orderEvents);
