@@ -3,6 +3,7 @@ package com.yooshyasha.ticketbookingsystem.services;
 import com.yooshyasha.ticketbookingsystem.dto.contoller.admin.ResponseCreateEvent;
 import com.yooshyasha.ticketbookingsystem.dto.contoller.event.ResponseGetEvents;
 import com.yooshyasha.ticketbookingsystem.entity.Event;
+import com.yooshyasha.ticketbookingsystem.exception.EventNotAvailable;
 import com.yooshyasha.ticketbookingsystem.repo.EventRepository;
 import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
@@ -48,5 +49,13 @@ public class EventService {
         return ResponseCreateEvent.builder()
                 .event(savedEvent)
                 .build();
+    }
+
+    Event minusTicket(Event event) {
+        if (event.getAvailableTickets() <= 0) {
+            throw new EventNotAvailable();
+        }
+        event.setAvailableTickets(event.getAvailableTickets() - 1);
+        return eventRepository.save(event);
     }
 }

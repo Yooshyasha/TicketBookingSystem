@@ -32,7 +32,7 @@ public class TicketService {
                     .sector(eventInput.getSector())
                     .rowNumber(eventInput.getRowNumber())
                     .seatNumber(eventInput.getSeatNumber())
-                    .event(event)
+                    .event(eventService.minusTicket(event))
                     .build();
 
             tickets.add(ticketRepository.save(ticket));
