@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @AllArgsConstructor
@@ -36,8 +37,15 @@ public class OrderService {
 
         Order savedOrder = orderRepository.save(order);
 
+        AtomicInteger totalAmount = new AtomicInteger();
+
+        tickets.forEach(ticket -> {
+            totalAmount.addAndGet(ticket.getEvent().getPrice());
+        });
+
         return ResponseCreateOrder.builder()
                 .order(savedOrder)
+                .totalAmount(Integer.parseInt(totalAmount.toString()))
                 .build();
     }
 
