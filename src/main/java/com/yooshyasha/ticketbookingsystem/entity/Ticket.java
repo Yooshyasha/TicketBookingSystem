@@ -22,6 +22,6 @@ public class Ticket {
 
     // В ТЗ у модели должен быть datetime, но он бы совпадал с event.datetime, поэтому я не стал его здесь добавлять
 
-    @OneToOne(targetEntity = Event.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Event.class, fetch = FetchType.EAGER)
     private Event event;
 }
