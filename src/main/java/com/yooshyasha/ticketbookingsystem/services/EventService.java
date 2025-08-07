@@ -1,11 +1,14 @@
 package com.yooshyasha.ticketbookingsystem.services;
 
+import com.yooshyasha.ticketbookingsystem.dto.contoller.admin.ResponseCreateEvent;
 import com.yooshyasha.ticketbookingsystem.dto.contoller.event.ResponseGetEvents;
 import com.yooshyasha.ticketbookingsystem.entity.Event;
 import com.yooshyasha.ticketbookingsystem.repo.EventRepository;
 import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor
@@ -21,5 +24,29 @@ public class EventService {
     @Nullable
     public Event getEvent(Long id) {
         return eventRepository.findById(id).orElse(null);
+    }
+
+    public ResponseCreateEvent createEvent(
+            String name,
+            String place,
+            int totalTickets,
+            int availableTickets,
+            int price,
+            LocalDateTime datetime
+    ) {
+        Event event = Event.builder()
+                .name(name)
+                .place(place)
+                .totalTickets(totalTickets)
+                .availableTickets(availableTickets)
+                .price(price)
+                .datetime(datetime)
+                .build();
+
+        Event savedEvent = eventRepository.save(event);
+
+        return ResponseCreateEvent.builder()
+                .event(savedEvent)
+                .build();
     }
 }
