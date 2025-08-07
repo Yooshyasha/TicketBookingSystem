@@ -15,6 +15,7 @@ import java.util.Collection;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "app_order")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
