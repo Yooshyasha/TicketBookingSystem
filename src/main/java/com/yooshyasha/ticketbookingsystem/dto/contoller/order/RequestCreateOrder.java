@@ -8,4 +8,5 @@ import java.util.Collection;
 @Data
 public class RequestCreateOrder {
     private Collection<EventInput> events;
+    private Long userId;
 }
