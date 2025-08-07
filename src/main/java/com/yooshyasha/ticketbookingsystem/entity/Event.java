@@ -22,5 +22,7 @@ public class Event {
     private int totalTickets;
     private int availableTickets;
 
+    private int price;
+
     private LocalDateTime datetime;
 }
